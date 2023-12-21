@@ -1,0 +1,20 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+    <div  style="text-align: center">
+        <h1>Add Venue to DataBase</h1>
+    </div>
+    <br/>
+    <div  style="text-align: center">
+    {% if submitted %}
+        Your venue was submitted succesfully!
+    {% else %}
+        <form action="" method=POST>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit" class="btn btn-secondary">
+    </form>
+    {% endif %}
+
+    </div>
+{% endblock %}
