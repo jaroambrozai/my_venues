@@ -1,0 +1,22 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+    <div  style="text-align: center">
+    {% if searched %}
+        <h1>You searched for {{ searched }}</h1>
+    </div>
+        <br/>
+        <table class="table table-hover table-striped table-bordered">
+        {% for venue in venues %}
+
+            <tr>
+            <td><a href="{% url 'show-venue' venue.id %}">{{ venue }}</a></td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <h1>Hey! You forgot to search for a Venue...</h1>
+    {% endif %}
+
+
+{% endblock %}
