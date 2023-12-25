@@ -4,7 +4,49 @@ from calendar import HTMLCalendar
 from datetime import datetime
 from .models import Event, Venue
 from .forms import VenueForm, EventForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+
+
+def venues_text(request):
+    response = HttpResponse(content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename = venues.txt'
+
+    # designate the model
+    venues = Venue.objects.all().order_by('name')
+
+    # create a blank list
+    lines = []
+
+    # lines = [
+    #     "This is line 1\n",
+    #     "This is line 2\n",
+    #     "This is line 2\n",
+    # ]
+
+    # for venue in venues:
+    #     lines.append(f'{venue.name}\n{venue.address}\n{venue.zip_code}\n{venue.phone}\n'
+    #                  f'{venue.web}\n{venue.email_address}\n\n\n')
+
+    for venue in venues:
+        if venue.name is not "":
+            lines.append(f'{venue.name}\n')
+        if venue.address is not "":
+            lines.append(f'{venue.address}\n')
+        if venue.zip_code is not "":
+            lines.append(f'{venue.zip_code}\n')
+        if venue.phone is not "":
+            lines.append(f'{venue.phone}\n')
+        if venue.web is not "":
+            lines.append(f'{venue.web}\n')
+        if venue.email_address is not "":
+            lines.append(f'{venue.email_address}\n')
+        lines.append(f'\n\n')
+
+    # write a textfile
+    # response.writelines(lines)
+
+    response.writelines(lines)
+    return response
 
 
 def delete_venue(request, venue_id):
